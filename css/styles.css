@@ -1,0 +1,118 @@
+*,
+*::after,
+*::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    /* rgb: red, green blue */
+    --primary: rgb(0, 0, 0);
+    /* hsl: hue degree of from 0 to 360deg
+    0: red, 120: green, 240 is blue, 
+    saturation: percentage of gray 
+    lightness: 0 is black, 50% gray; 100% is white */
+    --secondary: hsl(0, 0%, 100%);
+    --alternative: rgba(107, 72, 72, 0.8);
+    --awesomeColor: darkolivegreen;
+    /* red green blue */
+    --otherColor: #8f758f;
+}
+body {
+    text-align: center;
+}
+.container {
+    width: 900px;
+    /* margin-top and bottom */
+    margin-block: 12px;
+    /* margin-inline: left and right */
+    margin-inline: auto;
+    /* 
+    border-width , border-style, border-color
+    */
+    border: 5px solid;    
+    background-color: var(--alternative);
+    position: relative;
+}
+.container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-image: linear-gradient(to right, green, yellow);
+}
+.container :is(h2) {
+    background-color: var(--alternative);
+    color: var(--secondary);
+}
+.item {
+    width: 4rem;
+}
+/* img should fit without overlapping item class  */
+.item > img{
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 20px;
+}
+/* Set all examples to grid */
+.container :is(#example1, 
+#example2, #example3, 
+#example4, #example5) {
+    display: grid;
+}
+/* Example 1 */
+/* #example1 {
+    display: grid;
+} */
+/* Example 2 */
+#example2 {
+    grid-template-columns: repeat(3, 1fr);
+}
+/* Example 3 */
+#example3 {
+    grid-template-rows: repeat(3, 1fr);
+}
+/* Example 4
+Please compare the size on the columns
+to see the difference between 1fr and 3fr
+*/
+#example4 {
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: repeat(2, 1fr);
+}
+/* Example 5: 
+Let's create 3 columns
+I want the first child of item to 
+span from line 1 to the last line 
+and check what will happen.
+To span a column: use grid-column or 
+grid-template-areas: to define the area as a string it need to be defined on the parent.
+
+to use it on the child make use of grid-area: 'area'
+
+grid-column: line-start/line-end
+grid-row: line-start / line-end
+ */
+#example5 {
+    grid-template-columns: repeat(3, 1fr);
+}
+#example5 .item:nth-child(1) {
+    /* or 1 / 4 */
+    grid-column: 1 / -1;
+    margin-inline: auto;
+    /* This particular element took up 
+    the entire row. */
+}
+/* Media query */
+@media screen and (width < 900px) {
+    .container {
+        width: 100%;
+    }
+}
+/* 
+@container query is not yet support on google chrome
+@container toFlex (min-width: 900px)  {
+    flex-flow: column wrap;
+    align-items: center;
+} */
